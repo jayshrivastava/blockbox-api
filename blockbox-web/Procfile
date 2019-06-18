@@ -1,1 +1,0 @@
-web: cd blockbox-web && yarn build && yarn start 
