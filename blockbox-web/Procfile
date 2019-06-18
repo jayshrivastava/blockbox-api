@@ -1,1 +1,1 @@
-web:
+web: cd blockbox-web && npm run start
