@@ -1,0 +1,207 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2.0.0",
+        "title": "LCBO|next Store Inventory API",
+        "description": "API Wrapper for LCBO Store Inventory API that uses caching to get faster responses",
+        "contact": {
+            "name": "lcbonext@gmail.com"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/v2/api",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/store_inventory": {
+            "post": {
+                "description": "Returns store inventory of given product_ids for give store_ids",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "store ids to check inventory for",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "store_ids",
+                                "product_ids"
+                            ],
+                            "properties": {
+                                "store_ids": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "example": [
+                                        "123",
+                                        "580"
+                                    ]
+                                },
+                                "product_ids": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "example": [
+                                        "18"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An object containing objects of store_ids containing objects of product_ids with product information. There can be any amount of store_ids or product_ids and they act as placeholders for actual string id values",
+                        "schema": {
+                            "$ref": "#/definitions/StoreInventoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Client error when making a request to this endpoint",
+                        "schema": {
+                            "$ref": "#/definitions/StoreInventoryResponseError"
+                        }
+                    }
+                }
+            }
+        },
+        "/store_inventory/{store_id}": {
+            "get": {
+                "description": "Returns entire store inventory of given store_id",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "store_id",
+                        "in": "path",
+                        "description": "store id to get entire store inventory for",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "required": true,
+                            "example": "123"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An object containing an object with the store_id containing objects of product_ids with product information.",
+                        "schema": {
+                            "$ref": "#/definitions/StoreInventoryResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Client error when making a request to this endpoint",
+                        "schema": {
+                            "$ref": "#/definitions/StoreInventoryResponseError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "StoreInventoryResponse": {
+            "type": "object",
+            "required": [
+                "request",
+                "body",
+                "statusCode"
+            ],
+            "properties": {
+                "body": {
+                    "type": "object",
+                    "required": [
+                        "totalResults",
+                        "results"
+                    ],
+                    "properties": {
+                        "totalResults": {
+                            "type": "number"
+                        },
+                        "results": {
+                            "type": "object",
+                            "properties": {
+                                "store_id": {
+                                    "type": "object",
+                                    "properties": {
+                                        "totalProducts": {
+                                            "type": "number"
+                                        },
+                                        "products": {
+                                            "type": "object",
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "totalInventory": {
+                                                            "type": "number"
+                                                        },
+                                                        "itemName": {
+                                                            "type": "string"
+                                                        },
+                                                        "productPrice": {
+                                                            "type": "number"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "message": {
+                    "type": "string"
+                },
+                "request": {
+                    "type": "string"
+                },
+                "statusCode": {
+                    "type": "number",
+                    "example": 200
+                }
+            }
+        },
+        "StoreInventoryResponseError": {
+            "type": "object",
+            "required": [
+                "request",
+                "body",
+                "statusCode"
+            ],
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "request": {
+                    "type": "string"
+                },
+                "statusCode": {
+                    "type": "number",
+                    "example": 400
+                }
+            }
+        }
+    }
+}
