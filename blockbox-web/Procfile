@@ -1,3 +1,1 @@
-yarn install 
-yarn build
-yarn start
+web: yarn start
