@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">= 12.4.0",
+    "npm": ">= 6.9.0"
+  },
   "scripts": {
     "build": "tsc",
     "start": "NODE_ENV=production node ./build/index.js"
