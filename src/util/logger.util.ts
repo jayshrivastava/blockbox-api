@@ -10,7 +10,7 @@ class Logger {
     private namespace: string;
 
     constructor (namespace: string) {
-        this.namespace = `lcbonext:${namespace}:`;
+        this.namespace = `blockbox:${namespace}:`;
         this.bunyanLogger = bunyan.createLogger({
             name: this.namespace ,
             streams: [

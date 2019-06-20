@@ -5,8 +5,19 @@ const userSchema = new Schema({
         required: true,
         type: String,
     },
-
-}, { collection: 'users' },
+    user_id: {
+        required: false,
+        type: String,
+    },
+    ratingsIndexedByMovieId: {
+        required: true,
+        type: Object,
+    },
+    recommendations: {
+        required: false,
+        type: Object,
+    },
+}, { collection: 'users_3' },
 
 );
 

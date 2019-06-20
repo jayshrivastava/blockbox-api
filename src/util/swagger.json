@@ -2,10 +2,10 @@
     "swagger": "2.0",
     "info": {
         "version": "2.0.0",
-        "title": "LCBO|next Store Inventory API",
-        "description": "API Wrapper for LCBO Store Inventory API that uses caching to get faster responses",
+        "title": "Blockbox Insights API",
+        "description": "API for generating recommendations and interacting with user/movie info",
         "contact": {
-            "name": "lcbonext@gmail.com"
+            "name": "Jay Shrivastava & Twinkle Mehta"
         }
     },
     "host": "localhost:3000",

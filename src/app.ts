@@ -19,10 +19,6 @@ class App {
             next();
         });
 
-        this.app.get('/', (req: Request, res: Response, next: () => void) => {
-            res.send('bean');
-        });
-
         // parse application/x-www-form-urlencoded
         this.app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -33,6 +29,7 @@ class App {
 
         this.app.use('/', usersRoute);
 
+        // Catch all errors and send 400
         this.app.use((error: any, req: Request, res: Response, next: () => void) => {
             this.logger.error(error);
             res.status(400).send({
