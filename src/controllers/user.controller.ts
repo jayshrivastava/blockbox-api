@@ -34,8 +34,6 @@ class userController {
             const userItemRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(usersIndexedById, userSimilarityObject, userId);
 
             userItemRatingsPredictions.sort((a:any, b:any) => { return b.score - a.score});
-
-            userItemRatingsPredictions.slice(0, 100);
             
             res.send({
                 body: userItemRatingsPredictions,
