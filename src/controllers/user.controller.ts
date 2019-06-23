@@ -4,12 +4,9 @@ import { IUser } from '../interfaces/user.interface';
 import userService from '../services/user.service';
 import similarityService from '../services/similarity.service';
 import predictionsService from '../services/predictions.service';
-
-import loggerUtil from '../util/logger.util';
+import movieService from '../services/movie.service';
 
 class userController {
-
-    private logger = new loggerUtil('controller');
 
     public createUser = async (req: Request, res: Response, next: (error: any) => void) => {
         try {
@@ -27,22 +24,50 @@ class userController {
         try {
             const userId = req.params.id;
 
-            const usersIndexedById = await userService.getAllUsersIndexedById();
+            const { count } = req.query;
+
+            const usersIndexedById: { [index: string]: any } = await userService.getAllUsersIndexedById();
 
             const userSimilarityObject = await similarityService.generateUserSimilarity(usersIndexedById, userId);
 
-            const userItemRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(usersIndexedById, userSimilarityObject, userId);
+            let userMovieRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(usersIndexedById, userSimilarityObject, userId);
 
-            userItemRatingsPredictions.sort((a:any, b:any) => { return b.score - a.score});
-            
+            userMovieRatingsPredictions.sort((a: any, b: any) => { return b.score - a.score });
+
+            let recommendationsToReturn: any[] = [];
+
+            if (count) {
+                let i = 0;
+                let counter = 0;
+                while (counter < count) {
+                    while (usersIndexedById[userId].ratingsIndexedByMovieId[userMovieRatingsPredictions[i].movieId] === 0) {
+                        i += 1
+                    }
+                    recommendationsToReturn.push(userMovieRatingsPredictions[i++])
+                    counter += 1;
+                }
+            }
+
+            const predictionResults = recommendationsToReturn.map(async (prediction: any) => {
+                const movieObj = await movieService.getMovieById(prediction.movieId);
+                return {
+                    title: movieObj.title,
+                    movieId: movieObj.movie_id,
+                    genres: movieObj.genres,
+                    score: prediction.score
+                }
+            });
+
+            let reponse = await Promise.all(predictionResults);
+
             res.send({
-                body: userItemRatingsPredictions,
+                body: reponse,
             });
         } catch (error) {
             next(error);
         }
     }
- 
+
 
 }
 

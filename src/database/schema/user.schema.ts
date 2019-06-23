@@ -13,10 +13,6 @@ const userSchema = new Schema({
         required: true,
         type: Object,
     },
-    recommendations: {
-        required: false,
-        type: Object,
-    },
 }, { collection: 'users_3' },
 
 );

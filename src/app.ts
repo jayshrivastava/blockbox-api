@@ -2,13 +2,11 @@ import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
 import swaggerUiExpress from 'swagger-ui-express';
 import usersRoute from './routes/users.route';
-import loggerUtil from './util/logger.util';
 import swaggerJson from './util/swagger.json';
 
 class App {
 
     private app = express();
-    private logger = new loggerUtil('server');
 
     constructor() {
         // allow CORs requests
@@ -31,7 +29,7 @@ class App {
 
         // Catch all errors and send 400
         this.app.use((error: any, req: Request, res: Response, next: () => void) => {
-            this.logger.error(error);
+            console.error(error);
             res.status(400).send({
                 error,
                 message: 'Client side request error.',
@@ -43,7 +41,7 @@ class App {
 
     public startServer(port: string) {
         this.app.listen(port, () => {
-            this.logger.info(`Server started on port ${port}`);
+            console.log(`Server started on port ${port}`);
         });
     }
 
