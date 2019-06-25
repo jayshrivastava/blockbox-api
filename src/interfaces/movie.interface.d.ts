@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export interface IMovie {
-    movie_id: string;
+    movieId: string;
     title: string;
     genres: IGenres;
     ratingsIndexedByUserId?: IRatingsIndexedByUserId;

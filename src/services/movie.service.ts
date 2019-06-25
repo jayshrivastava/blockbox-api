@@ -2,9 +2,9 @@ import movieRepository from '../repositories/movie.repository';
 
 class MovieService {
 
-    public async getMovieById(movie_id: string) {
+    public async getMovieById(movieId: string) {
         try {
-            return await movieRepository.getMovieById(movie_id);
+            return await movieRepository.getMovieById(movieId);
         } catch (error) {
             throw error;
         }

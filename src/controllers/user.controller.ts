@@ -56,7 +56,7 @@ class userController {
                 const movieObj = await movieService.getMovieById(prediction.movieId);
                 return {
                     title: movieObj.title,
-                    movieId: movieObj.movie_id,
+                    movieId: movieObj.movieId,
                     genres: movieObj.genres,
                     score: prediction.score
                 }

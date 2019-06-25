@@ -3,9 +3,9 @@ import { IMovieModel, IMovie } from '../interfaces/movie.interface';
 
 class MovieRepository {
 
-    public async getMovieById(movie_id: string) {
+    public async getMovieById(movieId: string) {
         try {
-            return await MovieModel.findOne({ movie_id });
+            return await MovieModel.findOne({ movieId });
         } catch (error) {
             throw error;
         }

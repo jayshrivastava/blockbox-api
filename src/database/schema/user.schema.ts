@@ -5,7 +5,7 @@ const userSchema = new Schema({
         required: true,
         type: String,
     },
-    user_id: {
+    userId: {
         required: false,
         type: String,
     },
@@ -13,7 +13,7 @@ const userSchema = new Schema({
         required: true,
         type: Object,
     },
-}, { collection: 'users_3' },
+}, { collection: 'users_6' },
 
 );
 

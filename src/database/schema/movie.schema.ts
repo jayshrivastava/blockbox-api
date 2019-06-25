@@ -5,7 +5,7 @@ const movieSchema = new Schema({
         required: true,
         type: String,
     },
-    movie_id: {
+    movieId: {
         required: true,
         type: String,
     },
@@ -17,7 +17,7 @@ const movieSchema = new Schema({
         required: true,
         type: Array,
     }
-}, { collection: 'movies_3' },
+}, { collection: 'movies_6' },
 
 );
 
