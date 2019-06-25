@@ -3,7 +3,7 @@ import { IUser } from '../interfaces/user.interface';
 
 import userService from '../services/user.service';
 import similarityService from '../services/similarity.service';
-import predictionsService from '../services/predictions.service';
+import predictionsService from '../services/prediction.service';
 import movieService from '../services/movie.service';
 
 class userController {
@@ -26,11 +26,15 @@ class userController {
 
             const { count } = req.query;
 
-            const usersIndexedById: { [index: string]: any } = await userService.getAllUsersIndexedById();
+            const users: any[] = await userService.getAllUsersIndexedById();
 
-            const userSimilarityObject = await similarityService.generateUserSimilarity(usersIndexedById, userId);
+            const targetUser = users.find(user => {
+                return user._id == userId;
+            })
 
-            let userMovieRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(usersIndexedById, userSimilarityObject, userId);
+            const userSimilarityObject = await similarityService.generateUserSimilarity(users, targetUser);
+
+            let userMovieRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(users, userSimilarityObject, targetUser);
 
             userMovieRatingsPredictions.sort((a: any, b: any) => { return b.score - a.score });
 
@@ -40,7 +44,7 @@ class userController {
                 let i = 0;
                 let counter = 0;
                 while (counter < count) {
-                    while (usersIndexedById[userId].ratingsIndexedByMovieId[userMovieRatingsPredictions[i].movieId] === 0) {
+                    while (targetUser.ratingsIndexedByMovieId[userMovieRatingsPredictions[i].movieId] === 0) {
                         i += 1
                     }
                     recommendationsToReturn.push(userMovieRatingsPredictions[i++])

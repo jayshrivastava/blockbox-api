@@ -4,14 +4,13 @@ export interface IMovie {
     movie_id: string;
     title: string;
     genres: IGenres;
-    ratingsIndexedByUserId: IRatingsIndexedByUserId;
+    ratingsIndexedByUserId?: IRatingsIndexedByUserId;
 }
 
 // String Array
 export interface IGenres {
     [index: number]: string
 }
-
 export interface IRatingsIndexedByUserId {
     [x: string]: number
 }

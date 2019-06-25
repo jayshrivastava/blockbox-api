@@ -11,17 +11,10 @@ class UserService {
         }
     }
 
-    public async getAllUsersIndexedById(): Promise<object> {
+    public async getAllUsersIndexedById(): Promise<any[]> {
         try {
 
-            const users: any[] =  await userRepository.getAllUsers();
-            let usersObject: { [index:string] : any } = {};
-            users.forEach((userObj: any) => {
-                usersObject[userObj._id] = userObj
-            })
-
-            return usersObject;
-
+            return await userRepository.getAllUsers();
         } catch (error) {
             throw error;
         }
