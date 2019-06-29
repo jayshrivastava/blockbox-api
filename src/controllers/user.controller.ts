@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IUser } from '../interfaces/user.interface';
+import { IUser, IUserModel, IRatingsIndexedByMovieId } from '../interfaces/user.interface';
 
 import userService from '../services/user.service';
 import similarityService from '../services/similarity.service';
@@ -11,10 +11,23 @@ class userController {
 
     public createUser = async (req: Request, res: Response, next: (error: any) => void) => {
         try {
-            const userData: IUser = req.body;
-            await userService.createUser(userData);
+            const { name } = req.body;
+            const response = await userService.createUser(name);
             res.send({
-                body: 'Successfully created user',
+                body: response,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public updateRatings = async (req: Request, res: Response, next: (error: any) => void) => {
+        try {
+            const { id, ratingsIndexedByMovieId  } : {id: string, ratingsIndexedByMovieId: IRatingsIndexedByMovieId} = req.body;
+            if (!id || !ratingsIndexedByMovieId) { throw Error('Missing Id or ratingsIndexedByMovieId'); }
+            const response = await userService.updateRatings(id, ratingsIndexedByMovieId);
+            res.send({
+                body: response,
             });
         } catch (error) {
             next(error);
@@ -30,9 +43,13 @@ class userController {
             const users: any[] = await userService.getAllUsersIndexedById();
             const allMovies: IAllMoviesById = await movieService.getAll();
 
-            const targetUser = users.find(user => {
+            const targetUser: IUserModel= users.find(user => {
                 return user._id == userId;
             })
+
+            if (!Object.keys(targetUser.ratingsIndexedByMovieId).length) {
+                throw Error('User has not rated any items!');
+            }
 
             const userSimilarityObject = await similarityService.generateUserSimilarityV2(users, targetUser);
 

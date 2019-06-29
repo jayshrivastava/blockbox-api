@@ -1,7 +1,9 @@
 import { Document } from "mongoose";
 
 export interface IUser {
-    [x: string]: any
+    userId: string;
+    ratingsIndexedByMovieId: IRatingsIndexedByMovieId;
+    name: string;
 }
 
 export interface IRatingsIndexedByMovieId {

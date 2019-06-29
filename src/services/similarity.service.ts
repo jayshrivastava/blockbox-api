@@ -1,9 +1,9 @@
 import userRepository from '../repositories/user.repository';
-import { IUser, IRatingsIndexedByMovieId } from '../interfaces/user.interface'
+import { IUser, IRatingsIndexedByMovieId, IUserModel } from '../interfaces/user.interface'
 
 class SimilarityService {
 
-    public generateUserSimilarity = async (users: IUser[], targetUser: any): Promise<object> => {
+    public generateUserSimilarity = async (users: IUserModel[], targetUser: any): Promise<object> => {
         try {
 
             const similaritiesObj: any = {};
@@ -35,7 +35,7 @@ class SimilarityService {
         }
     }
 
-    public generateUserSimilarityV2 = async (users: IUser[], targetUser: any): Promise<object> => {
+    public generateUserSimilarityV2 = async (users: IUserModel[], targetUser: any): Promise<object> => {
         try {
 
             const similaritiesObj: any = {};
@@ -44,7 +44,7 @@ class SimilarityService {
                 movieIds[movieId] = 1;
             });
 
-            users.forEach((user: IUser) => {
+            users.forEach((user: IUserModel) => {
                     let targetSquareSum = 0.0;
                     let compareToSquareSum = 0.0;
                     let dotProductSum = 0.0;

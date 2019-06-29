@@ -1,11 +1,24 @@
-import { IUser } from '../interfaces/user.interface';
+import { IUser, IUserModel, IRatingsIndexedByMovieId } from '../interfaces/user.interface';
 import userRepository from '../repositories/user.repository';
 
 class UserService {
 
-    public async createUser(userData: IUser): Promise<void> {
+    public async createUser(name: string): Promise<IUserModel> {
         try {
-            await userRepository.createUser(userData);
+            return await userRepository.createUser({
+                name,
+                userId: "",
+                ratingsIndexedByMovieId: {}
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async updateRatings (userId: string, ratingsIndexedByMovieId: IRatingsIndexedByMovieId): Promise<IUserModel> {
+        try {
+            const response = await userRepository.updateRatings(userId, ratingsIndexedByMovieId);
+            return await userRepository.getUserById(userId);
         } catch (error) {
             throw error;
         }

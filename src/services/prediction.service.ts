@@ -1,21 +1,21 @@
-import { IUser } from "../interfaces/user.interface";
+import { IUser, IUserModel } from "../interfaces/user.interface";
 import { IMovie, IAllMoviesById } from "../interfaces/movie.interface";
 
 class SimilarityService {
 
-    public generatePredictionsFromUserSimilarity = async (users: IUser[], userSimilarityObject: any, targetUser: IUser): Promise<any[]> => {
+    public generatePredictionsFromUserSimilarity = async (users: IUserModel[], userSimilarityObject: any, targetUser: IUser): Promise<any[]> => {
         try {
 
             const userRatingsPredictions: any[] = [];
 
             let similaritiesSum: number = 0;
-            users.forEach((user: IUser) => {
+            users.forEach((user: IUserModel) => {
                 similaritiesSum += parseFloat(userSimilarityObject[user._id]);
             }, 0);
 
             for (const movieId in targetUser.ratingsIndexedByMovieId) {
                 let movieScore = 0;
-                users.forEach((user:IUser) => { 
+                users.forEach((user:IUserModel) => { 
                     movieScore += userSimilarityObject[user._id] * user.ratingsIndexedByMovieId[movieId];
                 });
                 userRatingsPredictions.push({
@@ -30,20 +30,20 @@ class SimilarityService {
         }
     }
 
-    public generatePredictionsFromUserSimilarityV2 = async (users: IUser[], userSimilarityObject: any, targetUser: IUser, allMovies: IAllMoviesById): Promise<any[]> => {
+    public generatePredictionsFromUserSimilarityV2 = async (users: IUserModel[], userSimilarityObject: any, targetUser: IUser, allMovies: IAllMoviesById): Promise<any[]> => {
         try {
 
             const userRatingsPredictions: any[] = [];
 
             let similaritiesSum: number = 0;
-            users.forEach((user: IUser) => {
+            users.forEach((user: IUserModel) => {
                 similaritiesSum += parseFloat(userSimilarityObject[user._id]);
             }, 0);
 
             Object.keys(allMovies).forEach((movieId: string) => {
                 
                 let movieScore = 0;
-                users.forEach((user:IUser) => { 
+                users.forEach((user: IUserModel) => { 
                     const userMovieRating = movieId in user.ratingsIndexedByMovieId ? user.ratingsIndexedByMovieId[movieId] : 0;
                     movieScore += userSimilarityObject[user._id] * userMovieRating;
                 });
