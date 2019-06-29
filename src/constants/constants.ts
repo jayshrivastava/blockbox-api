@@ -1,0 +1,1 @@
+export const MAX_NUMBER_OF_MOVIES_ON_NULL_SEARCH = 100;

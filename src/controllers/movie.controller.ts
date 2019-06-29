@@ -4,7 +4,6 @@ import movieService from '../services/movie.service';
 
 class movieController {
 
-
     public searchMovies = async (req: Request, res: Response, next: (error: any) => void) => {
         try {
             const searchQuery = req.params.searchQuery ? decodeURIComponent(req.params.searchQuery).toLowerCase() : '';

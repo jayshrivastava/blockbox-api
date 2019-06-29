@@ -1,5 +1,6 @@
 import { MovieModel } from '../database/models';
 import { IMovieModel, IMovie } from '../interfaces/movie.interface';
+import { MAX_NUMBER_OF_MOVIES_ON_NULL_SEARCH } from './../constants/constants'
 
 class MovieRepository {
 
@@ -21,6 +22,12 @@ class MovieRepository {
 
     public async searchByTitle(searchQuery: string) {
         try {
+            if (!searchQuery) {
+                return await MovieModel.find({
+                    title_lower:  { $regex: searchQuery} 
+                }).limit(MAX_NUMBER_OF_MOVIES_SEARCHED);
+
+            }
             return await MovieModel.find({
                 title_lower:  { $regex: searchQuery} 
             });
