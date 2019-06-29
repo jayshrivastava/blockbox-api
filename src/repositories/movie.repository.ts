@@ -25,7 +25,7 @@ class MovieRepository {
             if (!searchQuery) {
                 return await MovieModel.find({
                     title_lower:  { $regex: searchQuery} 
-                }).limit(MAX_NUMBER_OF_MOVIES_SEARCHED);
+                }).limit(MAX_NUMBER_OF_MOVIES_ON_NULL_SEARCH);
 
             }
             return await MovieModel.find({
