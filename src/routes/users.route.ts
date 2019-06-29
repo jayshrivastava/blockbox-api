@@ -3,9 +3,9 @@ import usersController from '../controllers/user.controller';
 
 const usersRouter = Router();
 
-usersRouter.post('/users', usersController.createUser);
+usersRouter.post('/', usersController.createUser);
 
-usersRouter.get('/users/recommendations/:id/:includeRated', usersController.getRecommendationsForUser);
+usersRouter.get('/recommendations/:id', usersController.getRecommendationsForUser);
 
 
 export default usersRouter;

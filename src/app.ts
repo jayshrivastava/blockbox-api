@@ -2,6 +2,8 @@ import bodyParser from 'body-parser';
 import express, { Request, Response } from 'express';
 import swaggerUiExpress from 'swagger-ui-express';
 import usersRoute from './routes/users.route';
+import moviesRoute from './routes/movies.route';
+
 import swaggerJson from './util/swagger.json';
 
 class App {
@@ -25,7 +27,9 @@ class App {
 
         this.app.use('/api-docs', swaggerUiExpress.serve, swaggerUiExpress.setup(swaggerJson));
 
-        this.app.use('/', usersRoute);
+        this.app.use('/users', usersRoute);
+        this.app.use('/movies', moviesRoute);
+
 
         // Catch all errors and send 400
         this.app.use((error: any, req: Request, res: Response, next: () => void) => {

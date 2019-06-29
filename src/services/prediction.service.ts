@@ -1,8 +1,9 @@
 import { IUser } from "../interfaces/user.interface";
+import { IMovie, IAllMoviesById } from "../interfaces/movie.interface";
 
 class SimilarityService {
 
-    public async generatePredictionsFromUserSimilarity(users: IUser[], userSimilarityObject: any, targetUser: IUser): Promise<any[]> {
+    public generatePredictionsFromUserSimilarity = async (users: IUser[], userSimilarityObject: any, targetUser: IUser): Promise<any[]> => {
         try {
 
             const userRatingsPredictions: any[] = [];
@@ -22,6 +23,35 @@ class SimilarityService {
                     score: movieScore/similaritiesSum
                 });
             }
+
+            return userRatingsPredictions;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public generatePredictionsFromUserSimilarityV2 = async (users: IUser[], userSimilarityObject: any, targetUser: IUser, allMovies: IAllMoviesById): Promise<any[]> => {
+        try {
+
+            const userRatingsPredictions: any[] = [];
+
+            let similaritiesSum: number = 0;
+            users.forEach((user: IUser) => {
+                similaritiesSum += parseFloat(userSimilarityObject[user._id]);
+            }, 0);
+
+            Object.keys(allMovies).forEach((movieId: string) => {
+                
+                let movieScore = 0;
+                users.forEach((user:IUser) => { 
+                    const userMovieRating = movieId in user.ratingsIndexedByMovieId ? user.ratingsIndexedByMovieId[movieId] : 0;
+                    movieScore += userSimilarityObject[user._id] * userMovieRating;
+                });
+                userRatingsPredictions.push({
+                    movieId: movieId,
+                    score: movieScore/similaritiesSum
+                });
+            });
 
             return userRatingsPredictions;
         } catch (error) {

@@ -5,6 +5,7 @@ import userService from '../services/user.service';
 import similarityService from '../services/similarity.service';
 import predictionsService from '../services/prediction.service';
 import movieService from '../services/movie.service';
+import { IAllMoviesById } from '../interfaces/movie.interface';
 
 class userController {
 
@@ -27,14 +28,15 @@ class userController {
             const { count } = req.query;
 
             const users: any[] = await userService.getAllUsersIndexedById();
+            const allMovies: IAllMoviesById = await movieService.getAll();
 
             const targetUser = users.find(user => {
                 return user._id == userId;
             })
 
-            const userSimilarityObject = await similarityService.generateUserSimilarity(users, targetUser);
+            const userSimilarityObject = await similarityService.generateUserSimilarityV2(users, targetUser);
 
-            let userMovieRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarity(users, userSimilarityObject, targetUser);
+            let userMovieRatingsPredictions = await predictionsService.generatePredictionsFromUserSimilarityV2(users, userSimilarityObject, targetUser, allMovies);
 
             userMovieRatingsPredictions.sort((a: any, b: any) => { return b.score - a.score });
 
@@ -53,7 +55,7 @@ class userController {
             }
 
             const predictionResults = recommendationsToReturn.map(async (prediction: any) => {
-                const movieObj = await movieService.getMovieById(prediction.movieId);
+                const movieObj = allMovies[prediction.movieId];
                 return {
                     title: movieObj.title,
                     movieId: movieObj.movieId,

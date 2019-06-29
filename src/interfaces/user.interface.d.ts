@@ -4,7 +4,7 @@ export interface IUser {
     [x: string]: any
 }
 
-export interface ratingsIndexedByMovieId {
+export interface IRatingsIndexedByMovieId {
     [index: string]: number
 }
 export interface IUserModel extends IUser, Document {}

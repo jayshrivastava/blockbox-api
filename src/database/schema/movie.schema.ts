@@ -17,7 +17,7 @@ const movieSchema = new Schema({
         required: true,
         type: Array,
     }
-}, { collection: 'movies_6' },
+}, { collection: 'movies_9' },
 
 );
 

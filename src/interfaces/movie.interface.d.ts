@@ -15,4 +15,8 @@ export interface IRatingsIndexedByUserId {
     [x: string]: number
 }
 
+export interface IAllMoviesById {
+    [x: string]: IMovie
+}
+
 export interface IMovieModel extends IMovie, Document {}

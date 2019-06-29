@@ -13,7 +13,7 @@ const userSchema = new Schema({
         required: true,
         type: Object,
     },
-}, { collection: 'users_6' },
+}, { collection: 'users_7' },
 
 );
 
