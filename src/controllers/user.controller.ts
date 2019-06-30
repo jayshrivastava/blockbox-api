@@ -91,6 +91,20 @@ class userController {
         }
     }
 
+    public getUserById = async (req: Request, res: Response, next: (error: any) => void) => {
+        try {
+            const userId = req.params.id;
+
+            const response = await userService.getUserById(userId);
+
+            res.send({
+                body: response,
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
 
 }
 

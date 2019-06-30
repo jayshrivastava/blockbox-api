@@ -24,6 +24,14 @@ class UserService {
         }
     }
 
+    public async getUserById (userId: string): Promise<IUserModel> {
+        try {
+            return await userRepository.getUserById(userId);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     public async getAllUsersIndexedById(): Promise<any[]> {
         try {
 
