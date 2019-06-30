@@ -63,7 +63,7 @@ class userController {
                 let i = 0;
                 let counter = 0;
                 while (counter < count) {
-                    while (targetUser.ratingsIndexedByMovieId[userMovieRatingsPredictions[i].movieId] === 0) {
+                    while (userMovieRatingsPredictions[i].movieId in targetUser.ratingsIndexedByMovieId) {
                         i += 1
                     }
                     recommendationsToReturn.push(userMovieRatingsPredictions[i++])
