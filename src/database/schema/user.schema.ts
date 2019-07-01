@@ -13,8 +13,8 @@ const userSchema = new Schema({
         required: true,
         type: Object,
     },
-}, { collection: 'users_7' },
-
+}, 
+{ collection: 'users_8', minimize: false  },
 );
 
 export default userSchema;
