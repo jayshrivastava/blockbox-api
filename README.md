@@ -1,4 +1,4 @@
-FrontEnd Located at https://github.com/jayshrivastava/blockbox-web
+Frontend Located at https://github.com/jayshrivastava/blockbox-web
 
 ## Dependencies
 
