@@ -1,4 +1,4 @@
-# Blockbox Movie Recommender Web :crystal_ball:
+# Blockbox Movie Recommender API :crystal_ball:
 
 https://blockbox-web.herokuapp.com/
 
