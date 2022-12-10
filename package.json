@@ -23,7 +23,7 @@
     "bunyan": "^1.8.12",
     "debug": "^4.1.1",
     "dotenv": "^7.0.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "mongoose": "^5.4.20",
     "swagger-ui-express": "^4.0.2"
   },
